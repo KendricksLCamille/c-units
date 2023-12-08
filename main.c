@@ -8,8 +8,6 @@
 int main(int argc, char *argv[])
 {
     printf("Hello, World!\n");
-    int name = 10;
-    const typeof(name) d = 14;
-    printf("%d", d);
+    units_si_derived_units_print(&FREQUENCY);
     return 0;
 }

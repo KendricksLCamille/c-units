@@ -4,4 +4,5 @@ project(c_units C)
 set(CMAKE_C_STANDARD 23)
 
 add_executable(c_units main.c
-        units.c)
+        units.c
+        units_si_prefix.h)

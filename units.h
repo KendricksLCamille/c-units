@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
+
 
 #define UNITS_MAGINITUDE_TYPE long double
 #define UNITS_STR_TO_MAGNITUDE_TYPE_POINTER(STR) UNITS_str_to_long_double(STR)
@@ -22,55 +24,22 @@
 #define UNITS_FREE_UNIT(UNIT)
 
 
-typedef struct UNITS_SI_Base_Units_Type UNITS_SI_Base_Units_Type;
-
-extern const UNITS_SI_Base_Units_Type LENGTH;
-extern const UNITS_SI_Base_Units_Type MASS;
-extern const UNITS_SI_Base_Units_Type TIME;
-extern const UNITS_SI_Base_Units_Type ELECTRIC_CURRENT;
-extern const UNITS_SI_Base_Units_Type THERMODYNAIMC_TEMPATURE;
-extern const UNITS_SI_Base_Units_Type AMOUNT_OF_SUBSTANCE;
-extern const UNITS_SI_Base_Units_Type LUMINOUS_INTENSITY;
-extern const UNITS_SI_Base_Units_Type INVALID;
-
-typedef struct UNITS_SI_Prefix units_si_prefix;
-
-extern units_si_prefix UNIT_YOTTA;
-extern units_si_prefix UNIT_ZETTA;
-extern units_si_prefix UNIT_EXA;
-extern units_si_prefix UNIT_PETA;
-extern units_si_prefix UNIT_TERA;
-extern units_si_prefix UNIT_GIGA;
-extern units_si_prefix UNIT_MEGA;
-extern units_si_prefix UNIT_KILO;
-extern units_si_prefix UNIT_HECTO;
-extern units_si_prefix UNIT_DEKA;
-extern units_si_prefix UNIT_DECI;
-extern units_si_prefix UNIT_CENTI;
-extern units_si_prefix UNIT_MILLI;
-extern units_si_prefix UNIT_MICRO;
-extern units_si_prefix UNIT_NANO;
-extern units_si_prefix UNIT_PICO;
-extern units_si_prefix UNIT_FEMTO;
-extern units_si_prefix UNIT_ATTO;
-extern units_si_prefix UNIT_ZEPTO;
-extern units_si_prefix UNIT_YOCTO;
-
-typedef struct UNITS_Unit UNITS_Unit;
-
-#define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
-#define UNITS_CPC_USBUT UNITS_CONST_POINTER_CONST(UNITS_SI_Base_Units_Type)
-#define UNITS_CPC_U UNITS_CONST_POINTER_CONST(Unit)
 
 
-typedef struct UNITS_Numeric
-{
-    UNITS_MAGINITUDE_TYPE* real_value;
-    UNITS_SI_Base_Units_Type* numerator_units;
-    UNITS_SI_Base_Units_Type* denominator_units;
-    ushort number_of_numerator_units;
-    ushort number_of_denominator_units;
-} Unit;
+typedef struct UNITS_SI_Derived_Units_Type units_si_derived_units;
+#define UNITS_CPC_U UNITS_CONST_POINTER_CONST(units_si_derived_units)
+extern const units_si_derived_units METER;
+extern const units_si_derived_units KILO_GRAM;
+extern const units_si_derived_units SECOND;
+extern const units_si_derived_units AMPERE;
+extern const units_si_derived_units KELVIN;
+extern const units_si_derived_units MOLE;
+extern const units_si_derived_units CANDELA;
+extern const units_si_derived_units FREQUENCY;
+
+void units_si_derived_units_print(const units_si_derived_units* const derived_units);
+
+typedef struct UNITS_Numeric UNITS_Numeric;
 
 
 char* unit_to_string_MALLOC(UNITS_CPC_U unit);
