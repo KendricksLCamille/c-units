@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+
+#include "lib/sds-master/sds.h"
 #define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
 
 
@@ -36,8 +38,10 @@ extern const units_si_derived_units KELVIN;
 extern const units_si_derived_units MOLE;
 extern const units_si_derived_units CANDELA;
 extern const units_si_derived_units FREQUENCY;
+extern const units_si_derived_units FORCE;
 
-void units_si_derived_units_print(const units_si_derived_units* const derived_units);
+
+void units_get_metadata_of_unit(const units_si_derived_units* const derived_units);
 
 typedef struct UNITS_Numeric UNITS_Numeric;
 
@@ -49,7 +53,6 @@ UNITS_CPC_U unit_divide(UNITS_CPC_U a, UNITS_CPC_U b);
 UNITS_CPC_U unit_modulo(UNITS_CPC_U a, UNITS_CPC_U b);
 UNITS_CPC_U unit_add(UNITS_CPC_U a, UNITS_CPC_U b);
 UNITS_CPC_U unit_subtract(UNITS_CPC_U a, UNITS_CPC_U b);
-
 
 #endif //UNITS_H
 /*

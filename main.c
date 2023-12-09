@@ -7,7 +7,6 @@
 
 int main(int argc, char *argv[])
 {
-    printf("Hello, World!\n");
-    units_si_derived_units_print(&FREQUENCY);
+    units_get_metadata_of_unit(&FREQUENCY);
     return 0;
 }
