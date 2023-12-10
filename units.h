@@ -4,6 +4,8 @@
 #ifndef UNITS_H
 #define UNITS_H
 
+#include "units_dimmension.h"
+
 #define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
 
 
@@ -25,25 +27,7 @@
 
 
 
-typedef struct UNITS_SI_Derived_Units_Type units_si_derived_units;
-#define UNITS_CPC_U UNITS_CONST_POINTER_CONST(units_si_derived_units)
-extern const units_si_derived_units METER;
-extern const units_si_derived_units KILO_GRAM;
-extern const units_si_derived_units SECOND;
-extern const units_si_derived_units AMPERE;
-extern const units_si_derived_units KELVIN;
-extern const units_si_derived_units MOLE;
-extern const units_si_derived_units CANDELA;
-extern const units_si_derived_units HERTZ;
-extern const units_si_derived_units NEWTON;
-extern const units_si_derived_units PASCAL;
-extern const units_si_derived_units JOULE;
-extern const units_si_derived_units WATT;
-extern const units_si_derived_units COULOMB;
-extern const units_si_derived_units VOLT;
-extern const units_si_derived_units OHM;
 
-void units_get_metadata_of_unit(const units_si_derived_units* const derived_units);
 
 typedef struct UNITS_SI_Quantity units_si_quantity;
 
