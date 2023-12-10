@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "units_si_base_unit_type.h"
 #include "units_si_prefix.h"

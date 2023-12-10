@@ -4,7 +4,6 @@
 #ifndef UNITS_H
 #define UNITS_H
 
-#include "units_dimmension.h"
 
 #define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
 
