@@ -12,6 +12,7 @@
 
 
 #define UNITS_MAGINITUDE_TYPE long double
+#define UNITS_MAGINITUDE_TYPE_ZERO 0.0L
 #define UNITS_STR_TO_MAGNITUDE_TYPE_POINTER(STR) UNITS_str_to_long_double(STR)
 #define UNITS_MAGINITUDE_TYPE_IS_ZERO(A) ((A) == 0)
 #define UNITS_MAGINITUDE_TYPE_ADD(A,B) ((A) + (B))
@@ -37,22 +38,29 @@ extern const units_si_derived_units AMPERE;
 extern const units_si_derived_units KELVIN;
 extern const units_si_derived_units MOLE;
 extern const units_si_derived_units CANDELA;
-extern const units_si_derived_units FREQUENCY;
-extern const units_si_derived_units FORCE;
-
+extern const units_si_derived_units HERTZ;
+extern const units_si_derived_units NEWTON;
+extern const units_si_derived_units PASCAL;
+extern const units_si_derived_units JOULE;
+extern const units_si_derived_units WATT;
+extern const units_si_derived_units COULOMB;
+extern const units_si_derived_units VOLT;
+extern const units_si_derived_units OHM;
 
 void units_get_metadata_of_unit(const units_si_derived_units* const derived_units);
 
-typedef struct UNITS_Numeric UNITS_Numeric;
+typedef struct UNITS_SI_Quantity units_si_quantity;
+
+// Returned when the conversion is not possible or operation is not supported.
+extern const units_si_quantity INVALID_RESULT;
 
 
-char* unit_to_string_MALLOC(UNITS_CPC_U unit);
-
-UNITS_CPC_U unit_scalar_multiply(UNITS_CPC_U a, UNITS_CPC_U b);
-UNITS_CPC_U unit_divide(UNITS_CPC_U a, UNITS_CPC_U b);
-UNITS_CPC_U unit_modulo(UNITS_CPC_U a, UNITS_CPC_U b);
-UNITS_CPC_U unit_add(UNITS_CPC_U a, UNITS_CPC_U b);
-UNITS_CPC_U unit_subtract(UNITS_CPC_U a, UNITS_CPC_U b);
+char* unit_to_string_MALLOC(units_si_quantity unit);
+units_si_quantity unit_add(units_si_quantity a, units_si_quantity b);
+units_si_quantity unit_subtract(units_si_quantity a, units_si_quantity b);
+units_si_quantity unit_scalar_multiply(units_si_quantity a, units_si_quantity b);
+units_si_quantity unit_divide(units_si_quantity a, units_si_quantity b);
+units_si_quantity unit_modulo(units_si_quantity a, units_si_quantity b);
 
 #endif //UNITS_H
 /*

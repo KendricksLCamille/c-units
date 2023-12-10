@@ -3,15 +3,12 @@
 //
 
 #include "units.h"
-#include "units_si_prefix.h"
-#include "units_si_base_unit_type_imp.h"
 #include "units_si_prefix_imp.h"
+#include "units_si_base_unit_type_imp.h"
 
 #include <stdbool.h>
 #include <stdio.h>
-
-
-
+#include <string.h>
 
 struct UNITS_SI_Derived_Units_Type
 {
@@ -66,6 +63,57 @@ const units_si_derived_units KELVIN = BASE_UNITS(THERMODYNAIMC_TEMPATURE, "kelvi
 const units_si_derived_units MOLE = BASE_UNITS(AMOUNT_OF_SUBSTANCE, "mole", "mol");
 const units_si_derived_units CANDELA = BASE_UNITS(LUMINOUS_INTENSITY, "candela", "cd");
 
+
+
+
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+#define UNITS_SI_DERIVED_UNIT_TYPE2(var_name, u_quat, u_name, u_symbol, u_denominator, u_numerator) \
+const units_si_derived_units var_name = { \
+        .derived_quantity = u_quat, \
+        .name = u_name, \
+        .symbol = u_symbol, \
+        .prefix = &UNIT_SELF, \
+        .denominator = u_denominator, \
+        .number_unit_in_denominator = ARRAY_SIZE(u_denominator),\
+        .numerator = u_numerator, \
+        .number_unit_in_numerator = ARRAY_SIZE(u_numerator)\
+    }
+
+
+UNITS_SI_DERIVED_UNIT_TYPE2(INVALID_UNIT, "invalid_unit", "invalid_unit", "invalid_unit", NULL, NULL);
+
+const units_si_derived_units HERTZ = { .derived_quantity = "frequency", .name = "hertz", .symbol = "Hz", .prefix = &UNIT_SELF, .power = 1, .denominator = (const struct UNITS_SI_Derived_Units_Type* const[]){&SECOND}, .number_unit_in_denominator = 1, .numerator = (const struct UNITS_SI_Derived_Units_Type* const[]){}, .number_unit_in_numerator = 0, };
+
+const struct UNITS_SI_Derived_Units_Type* denominator_FORCE[] = {&SECOND, &SECOND};
+const struct UNITS_SI_Derived_Units_Type* numerator_FORCE[] = {&KILO_GRAM, &METER};
+const units_si_derived_units NEWTON = { .derived_quantity = "Force", .name = "Newton", .symbol = "N", .prefix = &UNIT_SELF, .denominator = denominator_FORCE, .number_unit_in_denominator = ARRAY_SIZE(denominator_FORCE), .numerator = numerator_FORCE, .number_unit_in_numerator = ARRAY_SIZE(numerator_FORCE) };
+
+const struct UNITS_SI_Derived_Units_Type* denominator_POWER[] = {&METER, &METER};
+const struct UNITS_SI_Derived_Units_Type* numerator_POWER[] = {&NEWTON};
+const units_si_derived_units WATT = { .derived_quantity = "Power", .name = "Watt", .symbol = "W", .prefix = &UNIT_SELF, .denominator = denominator_POWER, .number_unit_in_denominator = ARRAY_SIZE(denominator_POWER), .numerator = numerator_POWER, .number_unit_in_numerator = ARRAY_SIZE(numerator_POWER) };
+
+const struct UNITS_SI_Derived_Units_Type* denominator_PRESSURE[] = {&METER, &METER, &SECOND}; // e.g. (M L^-2 T^-2), Please define according to your need
+const struct UNITS_SI_Derived_Units_Type* numerator_PRESSURE[] = {&KILO_GRAM}; // e.g. (M L^-2 T^-2), Please define according to your need
+const units_si_derived_units PASCAL = { .derived_quantity = "Pressure", .name = "Pascal", .symbol = "Pa", .prefix = &UNIT_SELF, .denominator = denominator_PRESSURE, .number_unit_in_denominator = ARRAY_SIZE(denominator_PRESSURE), .numerator = numerator_PRESSURE, .number_unit_in_numerator = ARRAY_SIZE(numerator_PRESSURE) };
+
+const struct UNITS_SI_Derived_Units_Type* denominator_ENERGY[] = {&METER, &SECOND}; // e.g. (M L^2 T^-2), Please define according to your need
+const struct UNITS_SI_Derived_Units_Type* numerator_ENERGY[] = {&KILO_GRAM, &METER}; // e.g. (M L^2 T^-2), Please define according to your need
+const units_si_derived_units JOULE = { .derived_quantity = "Energy", .name = "Joule", .symbol = "J", .prefix = &UNIT_SELF, .denominator = denominator_ENERGY, .number_unit_in_denominator = ARRAY_SIZE(denominator_ENERGY), .numerator = numerator_ENERGY, .number_unit_in_numerator = ARRAY_SIZE(numerator_ENERGY) };
+
+const struct UNITS_SI_Derived_Units_Type* denominator_ELECTRIC_CHARGE[] = {&SECOND}; // e.g. (I T), Please define according to your need
+const struct UNITS_SI_Derived_Units_Type* numerator_ELECTRIC_CHARGE[] = {&AMPERE}; // e.g. (I T), Please define according to your need
+const units_si_derived_units COULOMB = { .derived_quantity = "Electric Charge", .name = "Coulomb", .symbol = "C", .prefix = &UNIT_SELF, .denominator = denominator_ELECTRIC_CHARGE, .number_unit_in_denominator = ARRAY_SIZE(denominator_ELECTRIC_CHARGE), .numerator = numerator_ELECTRIC_CHARGE, .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRIC_CHARGE) };
+  
+const struct UNITS_SI_Derived_Units_Type* denominator_ELECTRIC_POTENTIAL[] = {&METER, &METER, &SECOND}; // e.g. (M L^2 T^-3 I^-1), Please define according to your need
+const struct UNITS_SI_Derived_Units_Type* numerator_ELECTRIC_POTENTIAL[] = {&KILO_GRAM, &AMPERE}; // e.g. (M L^2 T^-3 I^-1), Please define according to your need
+const units_si_derived_units VOLT = { .derived_quantity = "Electric Potential", .name = "Volt", .symbol = "V", .prefix = &UNIT_SELF, .denominator = denominator_ELECTRIC_POTENTIAL, .number_unit_in_denominator = ARRAY_SIZE(denominator_ELECTRIC_POTENTIAL), .numerator = numerator_ELECTRIC_POTENTIAL, .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRIC_POTENTIAL) };
+  
+const struct UNITS_SI_Derived_Units_Type* denominator_ELECTRICAL_RESISTANCE[] = {&METER, &METER, &SECOND}; // e.g. (M L^2 T^-3 I^-2), Please define according to your need
+const struct UNITS_SI_Derived_Units_Type* numerator_ELECTRICAL_RESISTANCE[] = {&KILO_GRAM, &AMPERE, &AMPERE}; // e.g. (M L^2 T^-3 I^-2), Please define according to your need
+const units_si_derived_units OHM = { .derived_quantity = "Electrical Resistance", .name = "Ohm", .symbol = "Ω", .prefix = &UNIT_SELF, .denominator = denominator_ELECTRICAL_RESISTANCE, .number_unit_in_denominator = ARRAY_SIZE(denominator_ELECTRICAL_RESISTANCE), .numerator = numerator_ELECTRICAL_RESISTANCE, .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRICAL_RESISTANCE) };
+
+
+
 typedef struct Tuple {void* data; size_t size;} tuple_t;
 tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_size)
 {
@@ -100,7 +148,6 @@ tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_si
     }
     return simplified_list;
 }
-
 sds get_data_from_list(const units_si_derived_units* const* const list, const size_t size_of_list)
 {
     size_t data = 0;
@@ -128,48 +175,26 @@ sds get_data_from_list(const units_si_derived_units* const* const list, const si
     free(simplified_list);
     return output;
 }
-void simplify_list_to_string(const units_si_derived_units* data2)
+sds simplify_list_to_string(const units_si_derived_units* data2)
 {
     sds numerator = get_data_from_list(data2->numerator, data2->number_unit_in_numerator);
     sds denominator = get_data_from_list(data2->denominator,  data2->number_unit_in_denominator);
 
     if(sdslen(numerator) == 0) numerator = sdscat(numerator, sdsnew("1"));
     if(sdslen(denominator) >= 1) denominator = sdscat(sdsnew("/"), denominator);
-    const sds output = sdscatsds(numerator, denominator);
-    sdsfree(denominator);
-    printf("%s\n", output);
-    sdsfree(output);
+    return  sdscatsds(numerator, denominator);
 }
 
-#define UNITS_SI_DERIVED_UNIT_TYPE(var_name, u_quat, u_name, u_symbol, u_denominator, u_den_size, u_numerator, u_num_size) \
-const units_si_derived_units var_name = { \
-        .derived_quantity = u_quat, .name = u_name, .symbol = u_symbol, .prefix = &UNIT_SELF, .power = 1, \
-        .denominator = (const struct UNITS_SI_Derived_Units_Type* const[])u_denominator, \
-        .number_unit_in_denominator = u_den_size,\
-        .numerator = (const struct UNITS_SI_Derived_Units_Type* const[])u_numerator, \
-        .number_unit_in_numerator = u_num_size,\
-        \
-    }\
-
-
-
-const struct UNITS_SI_Derived_Units_Type* const derived_units_arr1[] = { &SECOND, };
-
-UNITS_SI_DERIVED_UNIT_TYPE(FREQUENCY, "frequency", "hertz", "Hz", {&SECOND}, 1, {}, 0);
-const units_si_derived_units FORCE = {
-    .derived_quantity = "Force",
-    .name = "Newton",
-    .symbol = "N", .prefix = &UNIT_SELF,
-    .denominator = (const struct UNITS_SI_Derived_Units_Type* const[]){&SECOND, &SECOND}, .number_unit_in_denominator = 2,
-    .numerator = (const struct UNITS_SI_Derived_Units_Type* const[]){&KILO_GRAM, &METER}, .number_unit_in_numerator = 2
-};
-const units_si_derived_units POWER = {
-    .derived_quantity = "Power",
-    .name = "Watt",
-    .symbol = "W", .prefix = &UNIT_SELF,
-    .denominator = (const struct UNITS_SI_Derived_Units_Type* const[]){&METER, &METER}, .number_unit_in_denominator = 2,
-    .numerator = (const struct UNITS_SI_Derived_Units_Type* const[]){&FORCE}, .number_unit_in_numerator = 1
-}; 
+// max_depth = 0 means it will go through the intmax_t maximum value interations which is platform dependant
+sds get_data_from_list_rec(const units_si_derived_units* const* const list, const size_t size_of_list, const intmax_t max_depth)
+{
+    if(max_depth == 0)
+    {
+        return sdsempty();
+    }
+    
+    return sdsempty();
+}
 
 sds units_si_derived_units_to_str(const units_si_derived_units* const type)
 {
@@ -238,3 +263,63 @@ void units_get_metadata_of_unit(const units_si_derived_units* const derived_unit
     printf("Symbol: %s\n", derived_units->symbol);
 }
 
+
+struct UNITS_SI_Quantity
+{
+    const UNITS_MAGINITUDE_TYPE magnitude;
+    const units_si_derived_units* const type;
+};
+
+const units_si_quantity INVALID_RESULT = { UNITS_MAGINITUDE_TYPE_ZERO, &INVALID};
+
+
+units_si_quantity unit_add(units_si_quantity a, units_si_quantity b)
+{
+    if(a.type == NULL || b.type == NULL) return INVALID_RESULT;
+    if(a.type != b.type) return INVALID_RESULT;
+    
+}
+
+
+units_si_derived_units* const unit_add(
+    const units_si_derived_units* const a,
+    const units_si_derived_units* const b)
+{
+    if(!is_derived_types_the_same(a,b))
+    {
+        return &INVALID_UNIT;
+    }
+
+#define ALLOCATE_AND_COPY_DATA_TO_VARIABLE(src, dest, num_of_elements, type) \
+    type dest;\
+    {\
+        size_t size_in_bytes = num_of_elements * sizeof(type); \
+        dest = malloc(size_in_bytes); \
+        memcpy(dest, src, size_in_bytes); \
+    }0\
+
+    const units_si_base_unit* type = a->type;
+    ALLOCATE_AND_COPY_DATA_TO_VARIABLE(a->numerator, numerator, a->number_unit_in_numerator, units_si_derived_units*);
+    size_t number_unit_in_numerator = a->number_unit_in_numerator;
+
+    ALLOCATE_AND_COPY_DATA_TO_VARIABLE(a->denominator, denominator, a->number_unit_in_numerator, units_si_derived_units*);
+    size_t number_unit_in_denominator = a->number_unit_in_denominator;
+
+    units_si_derived_units new_derived_units = {
+        .type = type,
+        .numerator = numerator,
+        .number_unit_in_numerator = number_unit_in_numerator,
+        .denominator = denominator,
+        .number_unit_in_denominator = number_unit_in_denominator,
+        .power = a->power,
+        .prefix = a->prefix,
+        .derived_quantity = strdup(a->derived_quantity),
+        .name = strdup(a->name),
+        .symbol = strdup(a->symbol)
+    };
+
+#undef ALLOCATE_AND_COPY_DATA_TO_VARIABLE
+    units_si_derived_units* const output = malloc(sizeof(units_si_derived_units));
+    memcpy(output, &new_derived_units, sizeof(units_si_derived_units));
+    return output;
+}

@@ -7,6 +7,6 @@
 
 int main(int argc, char *argv[])
 {
-    units_get_metadata_of_unit(&FREQUENCY);
+    units_get_metadata_of_unit(unit_add(&OHM, &SECOND));
     return 0;
 }
