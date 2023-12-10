@@ -31,7 +31,7 @@ const struct UNITS_SI_Prefix UNIT_ATTO = {("0.000000000000000001"), "Atto", "a"}
 const struct UNITS_SI_Prefix UNIT_ZEPTO = {("0.000000000000000000001"), "Zepto", "z"};
 const struct UNITS_SI_Prefix UNIT_YOCTO = {("0.000000000000000000000001"), "Yocto", "y"};
 
-
+// Use to map the prefix to the corresponding value
 struct UNITS_SI_Prefix UNITS_SI_PREFIXES[] = {
     UNIT_PICO,
     UNIT_PICO,

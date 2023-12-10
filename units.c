@@ -56,7 +56,7 @@ _Bool is_derived_types_the_same(const units_si_derived_units* a, const units_si_
     return true;
 }
 const units_si_derived_units MAGINITUDE = {NULL, NULL, 0, NULL, 0, 0, NULL};
-#define BASE_UNITS(unit_type, unit_name, unit_symbol, ...) {.type = &unit_type, .prefix = &UNIT_SELF,.derived_quantity = unit_type.name,.name = unit_name,.symbol = unit_symbol, .power = 1,  ##__VA_ARGS__}
+#define BASE_UNITS(unit_type, unit_name, unit_symbol, ...) {.type = &unit_type, .prefix = &UNIT_SELF,.derived_quantity = unit_name,.name = unit_name,.symbol = unit_symbol, .power = 1,  ##__VA_ARGS__}
 const units_si_derived_units METER = BASE_UNITS(LENGTH, "meter", "m");
 const units_si_derived_units KILO_GRAM = BASE_UNITS(MASS, "kilogram", "kg",  .prefix = &UNIT_KILO);
 const units_si_derived_units SECOND = BASE_UNITS(TIME, "second", "s");
