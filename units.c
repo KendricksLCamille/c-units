@@ -4,11 +4,13 @@
 
 #include "units.h"
 #include "units_si_prefix_imp.h"
-#include "units_si_base_unit_type_imp.h"
+#include "units_si_base_unit_type.h"
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include "lib/sds-master/sds.h"
 
 struct UNITS_SI_Derived_Units_Type
 {
@@ -273,7 +275,7 @@ struct UNITS_SI_Quantity
 const units_si_quantity INVALID_RESULT = { UNITS_MAGINITUDE_TYPE_ZERO, &INVALID};
 
 
-units_si_quantity unit_add(units_si_quantity a, units_si_quantity b)
+units_si_quantity unit_add(const units_si_quantity a, const units_si_quantity b)
 {
     if(a.type == NULL || b.type == NULL) return INVALID_RESULT;
     if(a.type != b.type) return INVALID_RESULT;
@@ -281,7 +283,7 @@ units_si_quantity unit_add(units_si_quantity a, units_si_quantity b)
 }
 
 
-units_si_derived_units* const unit_add(
+units_si_derived_units* const unit_add2(
     const units_si_derived_units* const a,
     const units_si_derived_units* const b)
 {

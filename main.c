@@ -3,10 +3,9 @@
 //
 
 #include "units.h"
-#include <stdio.h>
 
 int main(int argc, char *argv[])
 {
-    units_get_metadata_of_unit(unit_add(&OHM, &SECOND));
+    units_get_metadata_of_unit(&OHM);
     return 0;
 }
