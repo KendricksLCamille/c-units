@@ -2,11 +2,12 @@
 // Created by kendricks on 12/10/23.
 //
 
-#include "units_pointer_comparison.h"
+#include "units_pointer_support.h"
 
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 const pointer_counter_t* find_pointer_in_list(const pointer_counter_t** list, const size_t size, const void* data)
 {
@@ -20,6 +21,7 @@ const pointer_counter_t* find_pointer_in_list(const pointer_counter_t** list, co
 
     return NULL;
 }
+
 _Bool list_contains_pointer(const pointer_counter_t* list, const size_t size, const void* pointer)
 {
     for(int i = 0; i < size; i++)
@@ -28,9 +30,9 @@ _Bool list_contains_pointer(const pointer_counter_t* list, const size_t size, co
     }
     return false;
 }
-
-/*pointer_counter_t* count_occurences_of_pointer(void** list, const size_t size_of_list, size_t* output_size)
+pointer_counter_t* count_occurences_of_pointer1(void** list, const size_t size_of_list, size_t* const output_size)
 {
+    *output_size = 0; // ensure we start from 0
     pointer_counter_t* output = malloc(size_of_list * sizeof(pointer_counter_t));
     if (output == NULL)
     {
@@ -40,7 +42,7 @@ _Bool list_contains_pointer(const pointer_counter_t* list, const size_t size, co
 
     for (size_t i = 0; i < size_of_list; i++)
     {
-        if (list_contains_pointer(output, size_of_list, list[i])) continue;
+        if (list_contains_pointer(output, *output_size, list[i])) continue; // updated this line
         
         size_t count = 1;
         for (size_t j = i + 1; j < size_of_list; j++)
@@ -51,7 +53,8 @@ _Bool list_contains_pointer(const pointer_counter_t* list, const size_t size, co
             }
         }
 
-        output[(*output_size)++] = (pointer_counter_t){list[i], count};
+        pointer_counter_t temp = {list[i], count};
+        memcpy(&output[(*output_size)++], &temp, sizeof(pointer_counter_t));
     }
     return output;
-}*/
+}

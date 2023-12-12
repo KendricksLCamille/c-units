@@ -12,5 +12,5 @@ add_executable(c_units main.c
         units_si_base_unit_type.c
         units_dimmension.h
         units_dimmension.c
-        units_pointer_comparison.h
-        units_pointer_comparison.c)
+        units_pointer_support.h
+        units_pointer_support.c)

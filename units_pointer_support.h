@@ -44,7 +44,6 @@ typedef struct pointer_counter
  *
  * @note If memory allocation fails, NULL is returned, the output_size variable is set to 0 and errno set to ENOMEM.
  */
-pointer_counter_t* count_occurences_of_pointer(const void* list[], size_t size_of_list, const size_t* output_size);
-
+pointer_counter_t* count_occurences_of_pointer1(void** list, const size_t size_of_list, size_t* const output_size);
 
 #endif //UNITS_POINTER_COMPARISON_H
