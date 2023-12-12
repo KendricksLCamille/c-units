@@ -164,15 +164,15 @@ const units_si_dimmension OHM = {
 
 
 
-typedef struct Tuple
+typedef struct pointer_counter
 {
     void* data;
-    size_t size;
-} tuple_t;
+    size_t number_of_occurences;
+} pointer_counter_t;
 
-tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_size)
+pointer_counter_t* count_occurences_of_pointer(void** list, const size_t size_of_list, size_t* output_size)
 {
-    tuple_t* simplified_list = malloc(size_of_list * sizeof(tuple_t));
+    pointer_counter_t* simplified_list = malloc(size_of_list * sizeof(pointer_counter_t));
     if (simplified_list == NULL) exit(EXIT_FAILURE);
 
     for (size_t i = 0; i < size_of_list; i++)
@@ -180,7 +180,7 @@ tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_si
         _Bool already_in_list = false;
         for (size_t k = 0; k < *output_size; k++)
         {
-            tuple_t data = simplified_list[k];
+            pointer_counter_t data = simplified_list[k];
             if (data.data == list[i])
             {
                 already_in_list = true;
@@ -199,7 +199,7 @@ tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_si
             }
         }
 
-        simplified_list[(*output_size)++] = (tuple_t){list[i], count};
+        simplified_list[(*output_size)++] = (pointer_counter_t){list[i], count};
     }
     return simplified_list;
 }
@@ -207,16 +207,16 @@ tuple_t* simplify_list(void** list, const size_t size_of_list, size_t* output_si
 sds get_data_from_list(const units_si_dimmension* const* const list, const size_t size_of_list)
 {
     size_t data = 0;
-    tuple_t* simplified_list = simplify_list((void**)list, size_of_list, &data);
+    pointer_counter_t* simplified_list = count_occurences_of_pointer((void**)list, size_of_list, &data);
     sds output = sdsempty();
 
     for (size_t i = 0; i < data; i++)
     {
-        tuple_t tuple = simplified_list[i];
+        pointer_counter_t tuple = simplified_list[i];
         const units_si_dimmension* unit = simplified_list[i].data;
         output = sdscatsds(output, sdsnew(unit->symbol));
 
-        const size_t size = simplified_list[i].size;
+        const size_t size = simplified_list[i].number_of_occurences;
         if (size != 1) output = sdscatfmt(output, "%U", size);
         if (i != data - 1) output = sdscatsds(output, sdsnew(" * "));
     }
@@ -231,7 +231,6 @@ sds get_data_from_list(const units_si_dimmension* const* const list, const size_
     free(simplified_list);
     return output;
 }
-
 sds simplify_list_to_string(const units_si_dimmension* data2)
 {
     sds numerator = get_data_from_list(data2->numerator, data2->number_unit_in_numerator);

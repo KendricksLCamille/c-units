@@ -25,12 +25,9 @@
 
 
 
-
-
-
 typedef struct UNITS_SI_Quantity units_si_quantity;
 
-// Returned when the conversion is not possible or operation is not supported.
+// Returned when unsupported operations occurs. errono set to -1;
 extern const units_si_quantity INVALID_RESULT;
 
 
@@ -42,12 +39,3 @@ units_si_quantity unit_divide(units_si_quantity a, units_si_quantity b);
 units_si_quantity unit_modulo(units_si_quantity a, units_si_quantity b);
 
 #endif //UNITS_H
-/*
-typedef struct UNITS_SI_Prefixes
-{
-    short factor;
-    const char *symbol;
-    const char *name;
-    UNITS_MAGINITUDE_TYPE* ;
-};
-*/
