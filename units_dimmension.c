@@ -42,8 +42,8 @@ _Bool is_derived_types_the_same(const units_si_dimmension* a, const units_si_dim
     if (a->power != b->power) return false;
 
 
-    size_t max_a_numerator = a->number_unit_in_denominator;
-    size_t max_a_denominator = a->number_unit_in_numerator;
+    const size_t max_a_numerator = a->number_unit_in_denominator;
+    const size_t max_a_denominator = a->number_unit_in_numerator;
     for (int a_numerator = 0; a_numerator < max_a_numerator; a_numerator++)
     {
         const units_si_dimmension a_numerator_unit = *a->denominator[a_numerator];
@@ -55,9 +55,7 @@ _Bool is_derived_types_the_same(const units_si_dimmension* a, const units_si_dim
     not_found:
         return false;
     found:
-    
     }
-
     return true;
 }
 

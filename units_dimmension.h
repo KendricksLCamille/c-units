@@ -23,7 +23,8 @@ extern const units_si_dimmension COULOMB;
 extern const units_si_dimmension VOLT;
 extern const units_si_dimmension OHM;
 
-void units_get_metadata_of_unit(const units_si_dimmension* const derived_units);
+void units_get_metadata_of_unit(const units_si_dimmension* derived_units);
+_Bool is_derived_types_the_same(const units_si_dimmension* a, const units_si_dimmension* b);
 
 
 #endif //UNITS_DIMMENSION_H

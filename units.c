@@ -24,8 +24,8 @@ const units_si_quantity INVALID_RESULT = { UNITS_MAGINITUDE_TYPE_ZERO, &INVALID}
 units_si_quantity unit_add(const units_si_quantity a, const units_si_quantity b)
 {
     if(a.type == NULL || b.type == NULL) return INVALID_RESULT;
-    if(a.type != b.type) return INVALID_RESULT;
-    
+    if(!is_derived_types_the_same(a.type, b.type)) return INVALID_RESULT;
+    return (units_si_quantity){ a.magnitude + b.magnitude, a.type };
 }
 
 
