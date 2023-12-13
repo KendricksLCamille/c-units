@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "units_pointer_support.h"
 #include "units_si_base_unit_type.h"
 #include "units_si_prefix.h"
 #include "lib/sds-master/sds.h"
@@ -164,59 +165,24 @@ const units_si_dimmension OHM = {
 
 
 
-typedef struct pointer_counter
-{
-    void* data;
-    size_t number_of_occurences;
-} pointer_counter_t;
-
-pointer_counter_t* count_occurences_of_pointer(void** list, const size_t size_of_list, size_t* output_size)
-{
-    pointer_counter_t* simplified_list = malloc(size_of_list * sizeof(pointer_counter_t));
-    if (simplified_list == NULL) exit(EXIT_FAILURE);
-
-    for (size_t i = 0; i < size_of_list; i++)
-    {
-        _Bool already_in_list = false;
-        for (size_t k = 0; k < *output_size; k++)
-        {
-            pointer_counter_t data = simplified_list[k];
-            if (data.data == list[i])
-            {
-                already_in_list = true;
-                break;
-            }
-        }
-        if (already_in_list) continue;
-
-
-        size_t count = 1;
-        for (size_t j = i + 1; j < size_of_list; j++)
-        {
-            if (list[i] == list[j])
-            {
-                count++;
-            }
-        }
-
-        simplified_list[(*output_size)++] = (pointer_counter_t){list[i], count};
-    }
-    return simplified_list;
-}
 
 sds get_data_from_list(const units_si_dimmension* const* const list, const size_t size_of_list)
 {
     size_t data = 0;
     pointer_counter_t* simplified_list = count_occurences_of_pointer((void**)list, size_of_list, &data);
+    if(simplified_list == NULL)
+    {
+        return NULL;
+    }
     sds output = sdsempty();
 
     for (size_t i = 0; i < data; i++)
     {
-        pointer_counter_t tuple = simplified_list[i];
-        const units_si_dimmension* unit = simplified_list[i].data;
+        const pointer_counter_t tuple = simplified_list[i];
+        const units_si_dimmension* unit = tuple.data;
         output = sdscatsds(output, sdsnew(unit->symbol));
 
-        const size_t size = simplified_list[i].number_of_occurences;
+        const size_t size = tuple.number_of_occurences;
         if (size != 1) output = sdscatfmt(output, "%U", size);
         if (i != data - 1) output = sdscatsds(output, sdsnew(" * "));
     }
@@ -231,7 +197,7 @@ sds get_data_from_list(const units_si_dimmension* const* const list, const size_
     free(simplified_list);
     return output;
 }
-sds simplify_list_to_string(const units_si_dimmension* data2)
+sds get_dimmension(const units_si_dimmension* data2)
 {
     sds numerator = get_data_from_list(data2->numerator, data2->number_unit_in_numerator);
     sds denominator = get_data_from_list(data2->denominator, data2->number_unit_in_denominator);
@@ -318,4 +284,8 @@ void units_get_metadata_of_unit(const units_si_dimmension* const derived_units)
     printf("Derived Units: %s\n", derived_units->derived_quantity);
     printf("Name: %s\n", derived_units->name);
     printf("Symbol: %s\n", derived_units->symbol);
+
+    const sds temp = get_dimmension(derived_units);
+    printf("Dimmension: %s\n", temp);
+    sdsfree(temp);
 }

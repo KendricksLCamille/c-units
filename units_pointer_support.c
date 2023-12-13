@@ -30,7 +30,7 @@ _Bool list_contains_pointer(const pointer_counter_t* list, const size_t size, co
     }
     return false;
 }
-pointer_counter_t* count_occurences_of_pointer1(void** list, const size_t size_of_list, size_t* const output_size)
+pointer_counter_t* count_occurences_of_pointer(void** list, const size_t size_of_list, size_t* const output_size)
 {
     *output_size = 0; // ensure we start from 0
     pointer_counter_t* output = malloc(size_of_list * sizeof(pointer_counter_t));
@@ -53,6 +53,7 @@ pointer_counter_t* count_occurences_of_pointer1(void** list, const size_t size_o
             }
         }
 
+        // Why can't I assign directly to the output array? Why do I need to memcpy? Figure that out.
         pointer_counter_t temp = {list[i], count};
         memcpy(&output[(*output_size)++], &temp, sizeof(pointer_counter_t));
     }
