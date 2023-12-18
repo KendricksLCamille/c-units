@@ -35,10 +35,10 @@ extern const units_si_quantity INVALID_RESULT;
 
 
 char* unit_to_string_MALLOC(const units_si_quantity* unit);
-units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity unit_add(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity unit_divide(const units_si_quantity* const a, const units_si_quantity* const b);
 units_si_quantity* units_si_quantity_create(UNITS_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit);
 
 #endif //UNITS_H

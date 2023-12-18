@@ -16,4 +16,4 @@ add_executable(c_units main.c
         units_dimmension.c
         units_pointer_support.h
         units_pointer_support.c
-        lib/unity/src/unity.c)
+)
