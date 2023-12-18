@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 23)
 
 # Enable testing for the project
 add_executable(c_units main.c
-        units.c
+        units_quantity.c
         units_si_prefix.h
         lib/sds-master/sds.c
         units_si_prefix.c
@@ -16,4 +16,5 @@ add_executable(c_units main.c
         units_dimmension.c
         units_pointer_support.h
         units_pointer_support.c
+        units_configuration.h
 )

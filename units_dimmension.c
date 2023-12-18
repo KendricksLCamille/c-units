@@ -321,3 +321,4 @@ void units_get_metadata_of_unit(const units_si_dimmension* const derived_units)
     printf("Dimmension: %s\n", temp);
     sdsfree(temp);
 }
+

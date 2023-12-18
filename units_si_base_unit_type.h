@@ -4,7 +4,7 @@
 // Created by kendricks on 12/8/23.
 //
 
-#include "units.h"
+#include "units_quantity.h"
 
 typedef struct UNITS_SI_Base_Unit_Type units_si_base_unit;
 #define CONST_Base_Unit_Type UNITS_CONST_POINTER_CONST(units_si_base_unit)

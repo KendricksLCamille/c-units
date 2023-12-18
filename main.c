@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-#include "units.h"
+#include "units_quantity.h"
 int main()
 {
     units_si_quantity* created = units_si_quantity_create(1, &METER);
