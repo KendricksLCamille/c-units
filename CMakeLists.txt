@@ -5,7 +5,7 @@ add_compile_options(-Wall -Wextra #[[-Werror]] -pedantic -Wshadow -Wconversion -
 set(CMAKE_C_STANDARD 23)
 
 # Enable testing for the project
-add_executable(c_units main.c
+add_executable(csi main.c
         units_quantity.c
         units_si_prefix.h
         lib/sds-master/sds.c
