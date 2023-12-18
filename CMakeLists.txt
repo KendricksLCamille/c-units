@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.27)
 project(c_units C)
+add_compile_options(-Wall -Wextra #[[-Werror]] -pedantic -Wshadow -Wconversion -Wcast-qual -Wformat=2 -ftrapv)
 
 set(CMAKE_C_STANDARD 23)
 
+# Enable testing for the project
 add_executable(c_units main.c
         units.c
         units_si_prefix.h
@@ -13,4 +15,5 @@ add_executable(c_units main.c
         units_dimmension.h
         units_dimmension.c
         units_pointer_support.h
-        units_pointer_support.c)
+        units_pointer_support.c
+        lib/unity/src/unity.c)

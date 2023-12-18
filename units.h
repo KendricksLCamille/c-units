@@ -4,6 +4,8 @@
 #ifndef UNITS_H
 #define UNITS_H
 
+#include "units_dimmension.h"
+
 
 #define UNITS_CONST_POINTER_CONST(TYPE) const TYPE* const
 
@@ -17,11 +19,12 @@
 #define UNITS_MAGINITUDE_TYPE_MULTIPLY(A,B) ((A) * (B))
 #define UNITS_MAGINITUDE_TYPE_MODULO(A,B) ((A) % (B))
 #define UNITS_MAGINITUDE_TYPE_DIVIDE(A,B) ((A) / (B))
-#define UNITS_TO_SIZE_T(A) (size_t)(A)
-#define UNITS_TO_PTRDIFF_T(A) ((ptrdiff_t)(A))
-#define UNITS_TO_LONG_DOUBLE(A) ((long double)(A))
-#define UNITS_TO_STRING(A) UNITS_ERROR
-#define UNITS_FREE_UNIT(UNIT)
+#define UNITS_MAGNITUDE_TYPE_TO_STRING(STR,A) sprintf(STR,"%Lf", (A))
+#define UNITS_TO_LARGEST_UNSIGNED_INTEGER(A) (size_t)(A)
+#define UNITS_TO_LARGEST_SIGNED_INTEGER(A) ((ptrdiff_t)(A))
+#define UNITS_MAX_NUMBER_OF_CHARACTERS_IN_STRING 100
+#define UNITS_TO_LARGEST_REAL_NUMBER(A) ((long double)(A))
+#define UNITS_FREE_UNITS_MAGINITUDE_TYPE(UNIT)
 
 
 
@@ -31,11 +34,11 @@ typedef struct UNITS_SI_Quantity units_si_quantity;
 extern const units_si_quantity INVALID_RESULT;
 
 
-char* unit_to_string_MALLOC(units_si_quantity unit);
-units_si_quantity unit_add(units_si_quantity a, units_si_quantity b);
-units_si_quantity unit_subtract(units_si_quantity a, units_si_quantity b);
-units_si_quantity unit_scalar_multiply(units_si_quantity a, units_si_quantity b);
-units_si_quantity unit_divide(units_si_quantity a, units_si_quantity b);
-units_si_quantity unit_modulo(units_si_quantity a, units_si_quantity b);
+char* unit_to_string_MALLOC(const units_si_quantity* unit);
+units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b);
+units_si_quantity* units_si_quantity_create(UNITS_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit);
 
 #endif //UNITS_H

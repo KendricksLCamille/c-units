@@ -5,7 +5,7 @@
 
 #include "units_dimmension.h"
 
-int main(int argc, char *argv[])
+int main()
 {
     units_get_metadata_of_unit(&OHM);
     return 0;

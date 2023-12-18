@@ -33,34 +33,10 @@ struct UNITS_SI_Dimmension
     const char* const symbol;
 };
 
-_Bool is_derived_types_the_same(const units_si_dimmension* a, const units_si_dimmension* const b)
-{
-    if (a->type == b->type) return true;
-    if (a->numerator == NULL || b->numerator == NULL || a->denominator == NULL || b->denominator == NULL) return false;
-    if (a->number_unit_in_denominator != b->number_unit_in_denominator) return false;
-    if (a->number_unit_in_numerator != b->number_unit_in_numerator) return false;
-    if (a->power != b->power) return false;
-
-
-    const size_t max_a_numerator = a->number_unit_in_denominator;
-    const size_t max_a_denominator = a->number_unit_in_numerator;
-    for (int a_numerator = 0; a_numerator < max_a_numerator; a_numerator++)
-    {
-        const units_si_dimmension a_numerator_unit = *a->denominator[a_numerator];
-        for (int b_numerator = 0; b_numerator < max_a_denominator; b_numerator++)
-        {
-            const units_si_dimmension b_numerator_unit = *b->denominator[b_numerator];
-            if (is_derived_types_the_same(&a_numerator_unit, &b_numerator_unit)) goto found;
-        }
-    not_found:
-        return false;
-    found:
-    }
-    return true;
-}
-
 const units_si_dimmension MAGINITUDE = {NULL, NULL, 0, NULL, 0, 0, NULL};
+
 #define BASE_UNITS(unit_type, unit_name, unit_symbol, ...) {.type = &unit_type, .prefix = &UNIT_SELF,.derived_quantity = unit_name,.name = unit_name,.symbol = unit_symbol, .power = 1,  ##__VA_ARGS__}
+
 const units_si_dimmension METER = BASE_UNITS(LENGTH, "meter", "m");
 const units_si_dimmension KILO_GRAM = BASE_UNITS(MASS, "kilogram", "kg", .prefix = &UNIT_KILO);
 const units_si_dimmension SECOND = BASE_UNITS(TIME, "second", "s");
@@ -161,7 +137,65 @@ const units_si_dimmension OHM = {
     .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRICAL_RESISTANCE)
 };
 
+typedef struct dimmesnion_counter
+{
+    const units_si_dimmension* const dimmension;
+    intmax_t counter;
+} dimmesnion_counter;
 
+_Bool find_in_units_si_dimmension_array(const dimmesnion_counter* array, const intmax_t size, const units_si_dimmension* const target, uintmax_t* index)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (array[i].dimmension == target)
+        {
+            *index = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+dimmesnion_counter* combine_dimmesnion_counters(const dimmesnion_counter* a, dimmesnion_counter* b)
+{
+    dimmesnion_counter* output = malloc(sizeof(dimmesnion_counter) * (a->counter + b->counter));
+    if (output == NULL) return NULL;
+    size_t used_index = a->counter;
+
+    memcpy(output, a, sizeof(dimmesnion_counter) * used_index);
+
+    for (size_t i = 0; i < b->counter; i++)
+    {
+        uintmax_t temp_index = 0;
+        const dimmesnion_counter target = b[i];
+        if (find_in_units_si_dimmension_array(output, used_index, target.dimmension, &temp_index))
+        {
+            output[temp_index].counter += b;
+        }
+        else
+        {
+            
+            memcpy(&output[used_index++], &target, sizeof(dimmesnion_counter));
+        }
+    }
+
+    output = realloc(output, used_index * sizeof(dimmesnion_counter));
+    
+    return output;
+}
+
+dimmesnion_counter* get_dimmensions_init(units_si_dimmension* dimmension)
+{
+    dimmesnion_counter *numerator, *denominator;
+    // Get numerator portion of dimmension
+    for(int i = 0; i < dimmension->number_unit_in_numerator; i++)
+    {
+        
+    }
+    
+
+    return NULL;
+}
 
 
 sds get_data_from_list(const units_si_dimmension* const* const list, const size_t size_of_list)
