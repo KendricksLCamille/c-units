@@ -28,4 +28,5 @@ extern const units_si_dimmension VOLT;
 extern const units_si_dimmension OHM;
 
 char* get_dimmensions_string(const units_si_dimmension* dimmensions);
+void print_dimmensions(const units_si_dimmension* dimmensions);
 #endif //UNITS_DIMMENSION_H
