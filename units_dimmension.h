@@ -5,6 +5,10 @@
 #ifndef UNITS_DIMMENSION_H
 #define UNITS_DIMMENSION_H
 
+#include <stddef.h>
+
+#include "units_configuration.h"
+
 typedef struct UNITS_SI_Dimmension units_si_dimmension;
 #define UNITS_CPC_U UNITS_CONST_POINTER_CONST(units_si_derived_units)
 extern const units_si_dimmension METER;
@@ -23,9 +27,5 @@ extern const units_si_dimmension COULOMB;
 extern const units_si_dimmension VOLT;
 extern const units_si_dimmension OHM;
 
-
-void units_get_metadata_of_unit(const units_si_dimmension* derived_units);
-_Bool is_derived_types_the_same(const units_si_dimmension* a, const units_si_dimmension* b);
-
-
+char* get_dimmensions_string(const units_si_dimmension* dimmensions);
 #endif //UNITS_DIMMENSION_H
