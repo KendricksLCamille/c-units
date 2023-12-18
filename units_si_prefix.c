@@ -82,3 +82,7 @@ struct UNITS_SI_Prefix* get_units_si_prefix(short exponent)
 }
 
 #endif
+UNITS_MAGINITUDE_TYPE prefix_to_magnitude(const units_si_prefix* prefix)
+{
+    return UNITS_STR_TO_MAGNITUDE_TYPE(prefix->magnitude);
+}
