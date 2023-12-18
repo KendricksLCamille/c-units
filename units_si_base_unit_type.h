@@ -19,4 +19,5 @@ extern const units_si_base_unit LUMINOUS_INTENSITY;
 extern const units_si_base_unit INVALID;
 
 _Bool is_types_the_same(CONST_Base_Unit_Type a, CONST_Base_Unit_Type b);
+const units_si_dimmension* units_si_base_unit_to_dimmension(const units_si_base_unit* const a);
 #endif
