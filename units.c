@@ -39,28 +39,28 @@ units_si_quantity* allocate_units_si_quantity(const units_si_quantity* const src
     memcpy(dest, src, sizeof(units_si_quantity));
     return dest;
 }
-units_si_quantity unit_add(const units_si_quantity* const a, const units_si_quantity* const b)
+units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b)
 {
     UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_ADD(a->magnitude, b->magnitude);
-    return (units_si_quantity){magnitude, a->type};
+    ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b)
+units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b)
 {
     UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_SUBTRACT(a->magnitude, b->magnitude);
-    return (units_si_quantity){magnitude, a->type};
+        ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b)
+units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b)
 {
     UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_MULTIPLY(a->magnitude, b->magnitude);
-    return (units_si_quantity){magnitude, a->type};
+        ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity unit_divide(const units_si_quantity* const a, const units_si_quantity* const b)
+units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b)
 {
     UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_DIVIDE(a->magnitude, b->magnitude);
-    return (units_si_quantity){magnitude, a->type};
+    ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
 units_si_quantity* units_si_quantity_create(UNITS_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit)

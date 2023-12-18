@@ -3,10 +3,13 @@
 //
 
 
-#include "units_dimmension.h"
+#include <stdio.h>
 
+#include "units.h"
 int main()
 {
-    units_get_metadata_of_unit(&OHM);
+    units_si_quantity* created = units_si_quantity_create(1, &METER);
+    units_si_quantity* added = unit_add(created, created);
+    printf("%s\n", unit_to_string_MALLOC(added));
     return 0;
 }
