@@ -12,7 +12,7 @@
 #include <string.h>
 
 #include "units_si_base_unit_type.h"
-#include "units_si_prefix.h"
+#include "prefix/csi_prefix.h"
 #include "lib/sds-master/sds.h"
 
 struct CSI_SI_Dimmension
@@ -27,7 +27,7 @@ struct CSI_SI_Dimmension
     size_t number_unit_in_denominator;
 
     int power;
-    const units_si_prefix* const prefix;
+    const csi_prefix* const prefix;
     const char* const derived_quantity;
     const char* const name;
     const char* const symbol;
@@ -42,9 +42,9 @@ typedef struct list
 
 CSI_MAGINITUDE_TYPE get_base_unit_multiplier(const units_si_dimmension* dimmension)
 {
-    CSI_MAGINITUDE_TYPE denominator_multiplier = prefix_to_magnitude(
+    CSI_MAGINITUDE_TYPE denominator_multiplier = csi_prefix_to_magnitude(
         units_si_base_unit_to_dimmension(dimmension->type)->prefix);
-    CSI_MAGINITUDE_TYPE numerator_multiplier = prefix_to_magnitude(dimmension->prefix);
+    CSI_MAGINITUDE_TYPE numerator_multiplier = csi_prefix_to_magnitude(dimmension->prefix);
     return CSI_MAGINITUDE_TYPE_DIVIDE(numerator_multiplier, denominator_multiplier);
 }
 void find_and_increment_then_multiple(struct list* list, const units_si_dimmension* dimmension, const _Bool negative)
