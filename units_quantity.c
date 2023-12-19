@@ -12,7 +12,7 @@
 struct CSI_SI_Quantity
 {
     CSI_MAGINITUDE_TYPE magnitude;
-    const units_si_dimmension* type;
+    const csi_unit* type;
 };
 
 const units_si_quantity INVALID_RESULT = { CSI_MAGINITUDE_TYPE_ZERO, NULL};
@@ -60,7 +60,7 @@ units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_
     ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit)
+units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const csi_unit* unit)
 {
     ALLOCATE_AND_RETURN_UNIT(mangitude, unit);
 }
