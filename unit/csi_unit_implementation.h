@@ -4,8 +4,8 @@
 #include <stddef.h>
 
 #include "csi_unit.h"
-#include "prefix/csi_prefix.h"
-#include "quantity/csi_quantity.h"
+#include "../prefix/csi_prefix.h"
+#include "../quantity/csi_quantity.h"
 
 
 struct CSI_Unit
@@ -74,8 +74,8 @@ const struct CSI_Unit* numerator_POWER[] = {&JOULE};
 const struct CSI_Unit* denominator_POWER[] = {&SECOND};
 CSI_DERIVED_UNIT(WATT, "Power", "Watt", "W", denominator_POWER, numerator_POWER);
 
-const struct CSI_Unit* numerator_ELECTRIC_CHARGE[] = {&AMPERE, &SECOND};
-CSI_DERIVED_UNIT(COULUMB, "Electric Charge", "Coulumb", "C", EMPTY, numerator_ELECTRIC_CHARGE);
+const struct CSI_Unit* numerator_ELECTRIC_CHARGE[] = {&SECOND, &AMPERE};
+CSI_DERIVED_UNIT(COULOMB, "Electric Charge", "Coulomb", "C", EMPTY, numerator_ELECTRIC_CHARGE);
 
 const struct CSI_Unit* numerator_ELECTRIC_POTENTIAL[] = {&WATT};
 const struct CSI_Unit* denominator_ELECTRIC_POTENTIAL[] = {&AMPERE};

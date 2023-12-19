@@ -5,14 +5,11 @@
 
 #include <stdio.h>
 
-#include "csi_unit.h"
+#include "unit/csi_unit.h"
+
 
 int main()
 {
-    /*units_si_quantity* created = units_si_quantity_create(1, &METER);
-    units_si_quantity* added = unit_add(created, created);
-    printf("%s\n", unit_to_string_MALLOC(added));*/
-
-    print_dimmensions(&VOLT);
+    print_dimmensions(&COULOMB);
     return 0;
 }

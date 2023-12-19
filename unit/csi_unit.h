@@ -5,7 +5,7 @@
 #ifndef CSI_DIMMENSION_H
 #define CSI_DIMMENSION_H
 
-#include "csi_configuration.h"
+#include "../csi_configuration.h"
 
 typedef struct CSI_Unit csi_unit;
 #define CSI_CPC_UNIT CSI_CPC(csi_unit)

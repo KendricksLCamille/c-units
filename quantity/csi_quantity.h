@@ -6,9 +6,9 @@
 
 #include "csi_quantity.h"
 #include "../csi_configuration.h"
-#include "../csi_unit.h"
+#include "../unit/csi_unit.h"
 
-typedef struct CSI_Quantity
+typedef struct CSI_Measurement
 {
     CSI_CPC(char) name;
     CSI_CPC(csi_unit) base_unit;

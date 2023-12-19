@@ -12,10 +12,10 @@ add_executable(csi main.c
         prefix/csi_prefix.c
         quantity/csi_quantity.h
         quantity/csi_quantity.c
-        units_dimmension.c
+        unit/csi_unit.c
         units_pointer_support.h
         units_pointer_support.c
         csi_configuration.h
-        csi_unit_implementation.h
-        csi_unit.h
+        unit/csi_unit_implementation.h
+        unit/csi_unit.h
 )

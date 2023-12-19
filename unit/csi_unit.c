@@ -11,11 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "quantity/csi_quantity.h"
-#include "prefix/csi_prefix.h"
-#include "lib/sds-master/sds.h"
-
-
+#include "../quantity/csi_quantity.h"
+#include "../prefix/csi_prefix.h"
+#include "../lib/sds-master/sds.h"
 
 typedef struct list
 {
@@ -30,6 +28,25 @@ CSI_MAGINITUDE_TYPE get_base_unit_multiplier(const csi_unit* dimmension)
     CSI_MAGINITUDE_TYPE numerator_multiplier = csi_prefix_to_magnitude(dimmension->prefix);
     return CSI_MAGINITUDE_TYPE_DIVIDE(numerator_multiplier, denominator_multiplier);
 }
+
+void remove_dimmensions_with_a_power_of_zero(list_t* list)
+{
+    for (size_t i = 0; i < list->size; i++)
+    {
+        const csi_unit dimmension = list->list[i];
+        if (dimmension.power == 0)
+        {
+            for (size_t j = i; j < list->size - 1; j++)
+            {
+                // use memcpy to copy the last element to the current element
+                memcpy(&list->list[j], &list->list[j + 1], sizeof(csi_unit));
+            }
+            list->size--;
+            i--;
+        }
+    }
+}
+
 void find_and_increment_then_multiple(struct list* list, const csi_unit* dimmension, const _Bool negative)
 {
     for (size_t i = 0; i < list->size; i++)
@@ -90,7 +107,8 @@ list_t* breakdown(const csi_unit* dimmensions, list_t* list)
         }
         if(errno == ENOMEM) return NULL;
     }
-    
+
+    remove_dimmensions_with_a_power_of_zero(list);
     return list;
 }
 
@@ -134,23 +152,6 @@ char* get_dimmensions_string(const csi_unit* dimmensions)
 {
     list_t* list = breakdown(dimmensions, NULL);
     if (errno == ENOMEM) return NULL;
-
-    // remove all elements with a power of 0
-    for (size_t i = 0; i < list->size; i++)
-    {
-        const csi_unit dimmension = list->list[i];
-        if (dimmension.power == 0)
-        {
-            for (size_t j = i; j < list->size - 1; j++)
-            {
-                // use memcpy to copy the last element to the current element
-                memcpy(&list->list[j], &list->list[j + 1], sizeof(csi_unit));
-            }
-            list->size--;
-            i--;
-        }
-    }
-
     char* result = list_to_string(list);
     if(errno == ENOMEM) return NULL;
     free(list);
@@ -162,4 +163,46 @@ void print_dimmensions(const csi_unit* dimmensions)
     printf("Name: %s\n", dimmensions->name);
     printf("Symbol: %s\n", dimmensions->symbol);
     printf("Breakdown: %s\n", get_dimmensions_string(dimmensions));
+}
+
+/**
+ * Checks if two csi_unit dimmension are equivalent.
+ * 
+ * @param dimm The first dimmension
+ * @param dimm2 The second dimmension
+ * @param num_of_elems The number of csi_unit elements in the resultant array.
+ * @return A csi_unit array that is equivalent to both dimm and dimm2, or NULL if they are not equivalent.
+ */
+csi_unit* is_dimmensions_eqiuvalent(const csi_unit* dimm, const csi_unit* dimm2, size_t* num_of_elems)
+{
+    // list1 and list2 will store the breakdown of the input dimensions
+    list_t* list1 = breakdown(dimm, NULL);
+    if (errno == ENOMEM) return NULL;
+
+    list_t* list2 = breakdown(dimm2, NULL);
+    if (errno == ENOMEM) return NULL;
+
+    // If the two lists are not equal, return NULL
+    if (!is_lists_equal(list1, list2))
+    {
+        free(list1);
+        free(list2);
+        return NULL;
+    }
+
+    // Determine the number of csi_unit elements in the resultant array
+    const size_t bytes_allocated = sizeof(csi_unit) * list1->size > list2->size ? list1->size : list2->size;
+    csi_unit* result = malloc(bytes_allocated);
+    if (result == NULL)
+    {
+        errno = ENOMEM;
+        return NULL;
+    }
+
+    // Copy the elements from the smaller list to the resultant array
+    memcpy(result, list1->list, bytes_allocated);
+    free(list1);
+    free(list2);
+    *num_of_elems = bytes_allocated / sizeof(csi_unit);
+    return result;
 }
