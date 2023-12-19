@@ -5,7 +5,7 @@
 #include "units_si_base_unit_type.h"
 #include "units_dimmension.h"
 
-struct UNITS_SI_Base_Unit_Type
+struct CSI_SI_Base_Unit_Type
 {
     const char* base_quantity;
     const units_si_dimmension* base_dimmension;

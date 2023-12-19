@@ -1,15 +1,15 @@
 //
 // Created by kendricks on 12/7/23.
 
-#ifndef UNITS_QUANTITY_H
-#define UNITS_QUANTITY_H
+#ifndef CSI_QUANTITY_H
+#define CSI_QUANTITY_H
 
-#include "units_configuration.h"
+#include "csi_configuration.h"
 #include "units_dimmension.h"
 
 
 
-typedef struct UNITS_SI_Quantity units_si_quantity;
+typedef struct CSI_SI_Quantity units_si_quantity;
 
 // Returned when unsupported operations occurs. errono set to -1;
 extern const units_si_quantity INVALID_RESULT;
@@ -19,6 +19,6 @@ units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_qua
 units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b);
 units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b);
 units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* units_si_quantity_create(UNITS_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit);
+units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit);
 
-#endif //UNITS_H
+#endif //CSI_H

@@ -9,18 +9,18 @@
 #include <string.h>
 
 
-struct UNITS_SI_Quantity
+struct CSI_SI_Quantity
 {
-    UNITS_MAGINITUDE_TYPE magnitude;
+    CSI_MAGINITUDE_TYPE magnitude;
     const units_si_dimmension* type;
 };
 
-const units_si_quantity INVALID_RESULT = { UNITS_MAGINITUDE_TYPE_ZERO, NULL};
+const units_si_quantity INVALID_RESULT = { CSI_MAGINITUDE_TYPE_ZERO, NULL};
 
 
 char* unit_to_string_MALLOC(const units_si_quantity* unit){
-    char* numericString = malloc(UNITS_MAX_NUMBER_OF_CHARACTERS_IN_STRING * sizeof(char));
-    UNITS_MAGNITUDE_TYPE_TO_STRING(numericString, unit->magnitude);
+    char* numericString = malloc(CSI_MAX_NUMBER_OF_CHARACTERS_IN_STRING * sizeof(char));
+    CSI_MAGNITUDE_TYPE_TO_STRING(numericString, unit->magnitude);
     return numericString;   
 }
 
@@ -38,29 +38,29 @@ units_si_quantity* allocate_units_si_quantity(const units_si_quantity* const src
 }
 units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b)
 {
-    UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_ADD(a->magnitude, b->magnitude);
+    CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_ADD(a->magnitude, b->magnitude);
     ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
 units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b)
 {
-    UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_SUBTRACT(a->magnitude, b->magnitude);
+    CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_SUBTRACT(a->magnitude, b->magnitude);
         ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
 units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b)
 {
-    UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_MULTIPLY(a->magnitude, b->magnitude);
+    CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_MULTIPLY(a->magnitude, b->magnitude);
         ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
 units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b)
 {
-    UNITS_MAGINITUDE_TYPE magnitude = UNITS_MAGINITUDE_TYPE_DIVIDE(a->magnitude, b->magnitude);
+    CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_DIVIDE(a->magnitude, b->magnitude);
     ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* units_si_quantity_create(UNITS_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit)
+units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const units_si_dimmension* unit)
 {
     ALLOCATE_AND_RETURN_UNIT(mangitude, unit);
 }

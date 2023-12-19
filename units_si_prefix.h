@@ -1,9 +1,9 @@
-#ifndef UNITS_SI_PREFIX_H
-#define UNITS_SI_PREFIX_H
+#ifndef CSI_SI_PREFIX_H
+#define CSI_SI_PREFIX_H
 
-#include "units_configuration.h"
+#include "csi_configuration.h"
 
-typedef struct UNITS_SI_Prefix units_si_prefix;
+typedef struct CSI_SI_Prefix units_si_prefix;
 extern const units_si_prefix UNIT_YOTTA;
 extern const units_si_prefix UNIT_ZETTA;
 extern const units_si_prefix UNIT_EXA;
@@ -26,5 +26,5 @@ extern const units_si_prefix UNIT_ATTO;
 extern const units_si_prefix UNIT_ZEPTO;
 extern const units_si_prefix UNIT_YOCTO;
 
-UNITS_MAGINITUDE_TYPE prefix_to_magnitude(const units_si_prefix *prefix);
+CSI_MAGINITUDE_TYPE prefix_to_magnitude(const units_si_prefix *prefix);
 #endif

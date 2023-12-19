@@ -2,15 +2,15 @@
 // Created by kendricks on 12/10/23.
 //
 
-#ifndef UNITS_DIMMENSION_H
-#define UNITS_DIMMENSION_H
+#ifndef CSI_DIMMENSION_H
+#define CSI_DIMMENSION_H
 
 #include <stddef.h>
 
-#include "units_configuration.h"
+#include "csi_configuration.h"
 
-typedef struct UNITS_SI_Dimmension units_si_dimmension;
-#define UNITS_CPC_U UNITS_CONST_POINTER_CONST(units_si_derived_units)
+typedef struct CSI_SI_Dimmension units_si_dimmension;
+#define CSI_CPC_U CSI_CONST_POINTER_CONST(units_si_derived_units)
 extern const units_si_dimmension METER;
 extern const units_si_dimmension KILO_GRAM;
 extern const units_si_dimmension SECOND;
@@ -29,4 +29,4 @@ extern const units_si_dimmension OHM;
 
 char* get_dimmensions_string(const units_si_dimmension* dimmensions);
 void print_dimmensions(const units_si_dimmension* dimmensions);
-#endif //UNITS_DIMMENSION_H
+#endif //CSI_DIMMENSION_H

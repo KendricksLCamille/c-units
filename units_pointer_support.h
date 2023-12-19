@@ -8,8 +8,8 @@
  * @brief This file provides a structure definition used for maintaining a count of unique pointer occurrences.
  */
 
-#ifndef UNITS_POINTER_COMPARISON_H
-#define UNITS_POINTER_COMPARISON_H
+#ifndef CSI_POINTER_COMPARISON_H
+#define CSI_POINTER_COMPARISON_H
 
 #include <stddef.h>
 
@@ -46,4 +46,4 @@ typedef struct pointer_counter
  */
 pointer_counter_t* count_occurences_of_pointer(void** list, const size_t size_of_list, size_t* const output_size);
 
-#endif //UNITS_POINTER_COMPARISON_H
+#endif //CSI_POINTER_COMPARISON_H

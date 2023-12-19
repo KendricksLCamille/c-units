@@ -16,5 +16,5 @@ add_executable(csi main.c
         units_dimmension.c
         units_pointer_support.h
         units_pointer_support.c
-        units_configuration.h
+        csi_configuration.h
 )

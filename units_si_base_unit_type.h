@@ -1,13 +1,13 @@
-#ifndef UNITS_SI_BASE_UNIT_TYPE_IMP_H
-#define UNITS_SI_BASE_UNIT_TYPE_IMP_H
-  //
+#ifndef CSI_SI_BASE_UNIT_TYPE_IMP_H
+#define CSI_SI_BASE_UNIT_TYPE_IMP_H
+//
 // Created by kendricks on 12/8/23.
 //
 
 #include "units_quantity.h"
 
-typedef struct UNITS_SI_Base_Unit_Type units_si_base_unit;
-#define CONST_Base_Unit_Type UNITS_CONST_POINTER_CONST(units_si_base_unit)
+typedef struct CSI_SI_Base_Unit_Type units_si_base_unit;
+#define CONST_Base_Unit_Type CSI_CPC(units_si_base_unit)
 
 extern const units_si_base_unit LENGTH;
 extern const units_si_base_unit MASS;
