@@ -27,7 +27,6 @@ struct CSI_Unit
 };
 
 
-const csi_unit MAGINITUDE = {NULL, NULL, 0, NULL, 0, 0, NULL, NULL, NULL, NULL};
 
 #define BASE_CSI_UNIT(unit_type, unit_name, unit_symbol, ...) {.type = &unit_type, .prefix = &UNIT_SELF,.derived_quantity = unit_name,.name = unit_name,.symbol = unit_symbol, .power = 1,  ##__VA_ARGS__}
 
@@ -52,17 +51,38 @@ const csi_unit var_name = { \
 .number_unit_in_numerator = ARRAY_SIZE(u_numerator)\
 }
 
+const csi_unit EMPTY[0];
+
 #define CAST(name, array) const csi_unit* const name = (const csi_unit* const[])array
-CSI_DERIVED_UNIT(INVALID_UNIT, "invalid_unit", "invalid_unit", "invalid_unit", NULL, NULL);
+CSI_DERIVED_UNIT(INVALID_UNIT, "invalid_unit", "invalid_unit", "invalid_unit", EMPTY, EMPTY);
 
 CAST(hertz_denominator, {&SECOND});
-CSI_DERIVED_UNIT(HERTZ, "frequency", "hertz", "Hz", hertz_denominator, NULL);
+CSI_DERIVED_UNIT(HERTZ, "frequency", "hertz", "Hz", hertz_denominator, EMPTY);
 
 const struct CSI_Unit* denominator_FORCE[] = {&SECOND, &SECOND};
 const struct CSI_Unit* numerator_FORCE[] = {&KILO_GRAM, &METER};
-CSI_DERIVED_UNIT(NEWTON, "Force", "Newton", "N", numerator_FORCE, denominator_FORCE);
+CSI_DERIVED_UNIT(NEWTON, "Force", "Newton", "N", denominator_FORCE, numerator_FORCE);
 
 const struct CSI_Unit* denominator_PRESSURE[] = {&METER, &METER};
 const struct CSI_Unit* numerator_PRESSURE[] = {&NEWTON};
-CSI_DERIVED_UNIT(PASCAL, "Pressure", "Pascal", "Pa", numerator_PRESSURE, denominator_PRESSURE);
+CSI_DERIVED_UNIT(PASCAL, "Pressure", "Pascal", "Pa", denominator_PRESSURE, numerator_PRESSURE);
+
+const struct CSI_Unit* numerator_ENERGY[] = {&NEWTON, &METER};
+CSI_DERIVED_UNIT(JOULE, "Energy", "Joule", "J", EMPTY, numerator_ENERGY);
+
+const struct CSI_Unit* numerator_POWER[] = {&JOULE};
+const struct CSI_Unit* denominator_POWER[] = {&SECOND};
+CSI_DERIVED_UNIT(WATT, "Power", "Watt", "W", denominator_POWER, numerator_POWER);
+
+const struct CSI_Unit* numerator_ELECTRIC_CHARGE[] = {&AMPERE, &SECOND};
+CSI_DERIVED_UNIT(COULUMB, "Electric Charge", "Coulumb", "C", EMPTY, numerator_ELECTRIC_CHARGE);
+
+const struct CSI_Unit* numerator_ELECTRIC_POTENTIAL[] = {&WATT};
+const struct CSI_Unit* denominator_ELECTRIC_POTENTIAL[] = {&AMPERE};
+CSI_DERIVED_UNIT(VOLT, "Electric Potential", "Volt", "V", denominator_ELECTRIC_POTENTIAL, numerator_ELECTRIC_POTENTIAL);
+
+const struct CSI_Unit* numerator_ELECTRICAL_RESISTANCE[] = {&VOLT};
+const struct CSI_Unit* denominator_ELECTRICAL_RESISTANCE[] = {&AMPERE};
+CSI_DERIVED_UNIT(OHM, "Electric Resistance", "Ohm", "Ω", denominator_ELECTRICAL_RESISTANCE,
+                 numerator_ELECTRICAL_RESISTANCE);
 #endif

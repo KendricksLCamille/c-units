@@ -13,6 +13,6 @@ int main()
     units_si_quantity* added = unit_add(created, created);
     printf("%s\n", unit_to_string_MALLOC(added));*/
 
-    print_dimmensions(&PASCAL);
+    print_dimmensions(&VOLT);
     return 0;
 }

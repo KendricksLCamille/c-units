@@ -134,12 +134,28 @@ char* get_dimmensions_string(const csi_unit* dimmensions)
 {
     list_t* list = breakdown(dimmensions, NULL);
     if (errno == ENOMEM) return NULL;
+
+    // remove all elements with a power of 0
+    for (size_t i = 0; i < list->size; i++)
+    {
+        const csi_unit dimmension = list->list[i];
+        if (dimmension.power == 0)
+        {
+            for (size_t j = i; j < list->size - 1; j++)
+            {
+                // use memcpy to copy the last element to the current element
+                memcpy(&list->list[j], &list->list[j + 1], sizeof(csi_unit));
+            }
+            list->size--;
+            i--;
+        }
+    }
+
     char* result = list_to_string(list);
     if(errno == ENOMEM) return NULL;
     free(list);
     return result;
 }
-
 void print_dimmensions(const csi_unit* dimmensions)
 {
     printf("Quntity: %s\n", dimmensions->derived_quantity);
@@ -147,53 +163,3 @@ void print_dimmensions(const csi_unit* dimmensions)
     printf("Symbol: %s\n", dimmensions->symbol);
     printf("Breakdown: %s\n", get_dimmensions_string(dimmensions));
 }
-
-
-
-
-
-
-
-// e.g. (M L^2 T^-2), Please define according to your need
-const struct CSI_Unit* numerator_ENERGY[] = {&NEWTON, &METER};
-// e.g. (M L^2 T^-2), Please define according to your need
-const csi_unit JOULE = {
-    .derived_quantity = "Energy", .name = "Joule", .symbol = "J", .prefix = &UNIT_SELF,
-    .denominator = NULL, .number_unit_in_denominator = 0,
-    .numerator = numerator_ENERGY, .number_unit_in_numerator = ARRAY_SIZE(numerator_ENERGY)
-};
-
-const struct CSI_Unit* numerator_POWER[] = {&JOULE};
-const struct CSI_Unit* denominator_POWER[] = {&SECOND};
-const csi_unit WATT = {
-    .derived_quantity = "Power", .name = "Watt", .symbol = "W", .prefix = &UNIT_SELF, .denominator = denominator_POWER,
-    .number_unit_in_denominator = ARRAY_SIZE(denominator_POWER), .numerator = numerator_POWER,
-    .number_unit_in_numerator = ARRAY_SIZE(numerator_POWER)
-};
-
-const struct CSI_Unit* numerator_ELECTRIC_CHARGE[] = {&AMPERE, &SECOND};
-const csi_unit COULOMB = {
-    .derived_quantity = "Electric Charge", .name = "Coulomb", .symbol = "C", .prefix = &UNIT_SELF,
-    .denominator = NULL, .number_unit_in_denominator = 0,
-    .numerator = numerator_ELECTRIC_CHARGE, .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRIC_CHARGE)
-};
-
-const struct CSI_Unit* numerator_ELECTRIC_POTENTIAL[] = {&WATT};
-const struct CSI_Unit* denominator_ELECTRIC_POTENTIAL[] = {&AMPERE};
-const csi_unit VOLT = {
-    .derived_quantity = "Electric Potential", .name = "Volt", .symbol = "V", .prefix = &UNIT_SELF,
-    .denominator = denominator_ELECTRIC_POTENTIAL,
-    .number_unit_in_denominator = ARRAY_SIZE(denominator_ELECTRIC_POTENTIAL), .numerator = numerator_ELECTRIC_POTENTIAL,
-    .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRIC_POTENTIAL)
-};
-
-const struct CSI_Unit* numerator_ELECTRICAL_RESISTANCE[] = {&VOLT};
-const struct CSI_Unit* denominator_ELECTRICAL_RESISTANCE[] = {&AMPERE};
-const csi_unit OHM = {
-    .derived_quantity = "Electrical Resistance", .name = "Ohm", .symbol = "Ω", .prefix = &UNIT_SELF,
-    .denominator = denominator_ELECTRICAL_RESISTANCE,
-    .number_unit_in_denominator = ARRAY_SIZE(denominator_ELECTRICAL_RESISTANCE),
-    .numerator = numerator_ELECTRICAL_RESISTANCE,
-    .number_unit_in_numerator = ARRAY_SIZE(numerator_ELECTRICAL_RESISTANCE)
-};
-
