@@ -1,7 +1,7 @@
 #ifndef CSI_SI_PREFIX_H
 #define CSI_SI_PREFIX_H
 
-#include "../csi_configuration.h"
+#include "csi_configuration.h"
 
 typedef struct CSI_Prefix csi_prefix;
 extern const csi_prefix UNIT_YOTTA;

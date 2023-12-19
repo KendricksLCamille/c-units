@@ -2,8 +2,10 @@
 // Created by kendricks on 12/10/23.
 //
 
-#include "csi_quantity.h"
+#include "../csi_quantity.h"
 #include <stddef.h>
+
+#include "../csi_unit.h"
 
 const csi_quantity LENGTH = {"Length", &METER};
 const csi_quantity MASS = {"Mass", &KILO_GRAM};

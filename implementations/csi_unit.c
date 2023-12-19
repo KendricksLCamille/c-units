@@ -11,8 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../quantity/csi_quantity.h"
-#include "../prefix/csi_prefix.h"
 #include "../lib/sds-master/sds.h"
 
 typedef struct list
@@ -77,7 +75,13 @@ list_t* breakdown(const csi_unit* dimmensions, list_t* list)
     if (list == NULL)
     {
         list = malloc(sizeof(list_t));
-        list->multiplier = CSI_MAGINITUDE_TYPE_ZERO;
+        list->multiplier = CSI_MAGINITUDE_TYPE_ONE;
+    }
+
+    if (dimmensions->type != NULL)
+    {
+        find_and_increment_then_multiple(list, dimmensions, false);
+        return list;
     }
     
     for (size_t i = 0; i < dimmensions->number_unit_in_numerator; i++)
@@ -173,7 +177,7 @@ void print_dimmensions(const csi_unit* dimmensions)
  * @param num_of_elems The number of csi_unit elements in the resultant array.
  * @return A csi_unit array that is equivalent to both dimm and dimm2, or NULL if they are not equivalent.
  */
-csi_unit* is_dimmensions_eqiuvalent(const csi_unit* dimm, const csi_unit* dimm2, size_t* num_of_elems)
+_Bool is_dimmensions_eqiuvalent(const csi_unit* dimm, const csi_unit* dimm2)
 {
     // list1 and list2 will store the breakdown of the input dimensions
     list_t* list1 = breakdown(dimm, NULL);
@@ -187,22 +191,50 @@ csi_unit* is_dimmensions_eqiuvalent(const csi_unit* dimm, const csi_unit* dimm2,
     {
         free(list1);
         free(list2);
-        return NULL;
+        return false;
     }
 
-    // Determine the number of csi_unit elements in the resultant array
-    const size_t bytes_allocated = sizeof(csi_unit) * list1->size > list2->size ? list1->size : list2->size;
-    csi_unit* result = malloc(bytes_allocated);
+    free(list1);
+    free(list2);
+    return true;
+}
+
+
+typedef struct unit_prefix
+{
+    csi_unit* initial_unit;
+    csi_unit* final_unit;
+    csi_prefix* prefix;
+} unit_prefix_t;
+
+typedef struct unit_prefix_list
+{
+    unit_prefix_t* list;
+    size_t size;
+} unit_prefix_list_t;
+
+unit_prefix_t* prefix = NULL;
+
+csi_unit* csi_unit_with_prefix(const csi_unit* dimm, const csi_prefix* prefix)
+{
+    csi_unit dimm2 = {
+        dimm->type,
+        dimm->numerator,
+        dimm->number_unit_in_numerator,
+        dimm->denominator,
+        dimm->number_unit_in_denominator,
+        dimm->power,
+        prefix,
+        dimm->derived_quantity,
+        dimm->name,
+        dimm->symbol
+    };
+    csi_unit* result = malloc(sizeof(csi_unit));
     if (result == NULL)
     {
         errno = ENOMEM;
         return NULL;
     }
-
-    // Copy the elements from the smaller list to the resultant array
-    memcpy(result, list1->list, bytes_allocated);
-    free(list1);
-    free(list2);
-    *num_of_elems = bytes_allocated / sizeof(csi_unit);
+    memcpy(result, &dimm2, sizeof(csi_unit));
     return result;
 }

@@ -5,7 +5,9 @@
 #ifndef CSI_DIMMENSION_H
 #define CSI_DIMMENSION_H
 
-#include "../csi_configuration.h"
+#include <stddef.h>
+#include "csi_configuration.h"
+#include "csi_prefix.h"
 
 typedef struct CSI_Unit csi_unit;
 #define CSI_CPC_UNIT CSI_CPC(csi_unit)
@@ -27,7 +29,17 @@ extern const csi_unit VOLT;
 extern const csi_unit OHM;
 
 
-extern const csi_unit Squared(CSI_CPC_UNIT unit);
 char* get_dimmensions_string(CSI_CPC_UNIT dimmensions);
 void print_dimmensions(CSI_CPC_UNIT dimmensions);
+
+struct csi_unit_and_magnitude
+{
+    csi_unit* unit;
+    CSI_MAGINITUDE_TYPE manigitude;
+};
+
+struct csi_unit_and_magnitude* get_base_dimmension(CSI_CPC_UNIT d1, CSI_CPC_UNIT d2);
+
+_Bool is_dimmensions_eqiuvalent(const csi_unit* dimm, const csi_unit* dimm2);
+csi_unit* csi_unit_with_prefix(const csi_unit* dimm, const csi_prefix* prefix);
 #endif //CSI_DIMMENSION_H

@@ -5,8 +5,8 @@
 //
 
 #include "csi_quantity.h"
-#include "../csi_configuration.h"
-#include "../unit/csi_unit.h"
+#include "csi_configuration.h"
+#include "csi_unit.h"
 
 typedef struct CSI_Measurement
 {

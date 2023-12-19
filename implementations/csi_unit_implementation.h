@@ -3,9 +3,9 @@
 
 #include <stddef.h>
 
-#include "csi_unit.h"
-#include "../prefix/csi_prefix.h"
-#include "../quantity/csi_quantity.h"
+#include "../csi_unit.h"
+#include "../csi_prefix.h"
+#include "../csi_quantity.h"
 
 
 struct CSI_Unit
@@ -25,8 +25,6 @@ struct CSI_Unit
     const char* const name;
     const char* const symbol;
 };
-
-
 
 #define BASE_CSI_UNIT(unit_type, unit_name, unit_symbol, ...) {.type = &unit_type, .prefix = &UNIT_SELF,.derived_quantity = unit_name,.name = unit_name,.symbol = unit_symbol, .power = 1,  ##__VA_ARGS__}
 

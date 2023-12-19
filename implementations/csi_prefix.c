@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #ifndef CSI_SI_PREFIX_IMP_H
 #define CSI_SI_PREFIX_IMP_H
-#include "csi_prefix.h"
+#include "../csi_prefix.h"
 
 struct CSI_Prefix
 {

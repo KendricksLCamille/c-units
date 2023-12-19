@@ -6,15 +6,16 @@ set(CMAKE_C_STANDARD 23)
 
 # Enable testing for the project
 add_executable(csi main.c
-        prefix/csi_prefix.h
+        csi_prefix.h
         lib/sds-master/sds.c
-        prefix/csi_prefix.c
-        quantity/csi_quantity.h
-        quantity/csi_quantity.c
-        unit/csi_unit.c
+        implementations/csi_prefix.c
+        implementations/csi_quantity.c
+        implementations/csi_unit.c
         csi_configuration.h
-        unit/csi_unit_implementation.h
-        unit/csi_unit.h
+        implementations/csi_unit_implementation.h
+        csi_unit.h
         csi_measurement.h
-        csi_measurement.c
+        implementations/csi_measurement.c
+        csi_quantity.h
+        macro_helper.h
 )
