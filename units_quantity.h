@@ -8,16 +8,16 @@
 #include "unit/csi_unit.h"
 
 
-typedef struct CSI_SI_Quantity units_si_quantity;
+typedef struct CSI_Measurment csi_measurment;
 
-// Returned when unsupported operations occurs. errono set to -1;
-extern const units_si_quantity INVALID_RESULT;
+// Returned when unsupported operations occurs such as (1K + c) or (Tempature + Velocity). errono set to -1;
+extern const csi_measurment INVALID_RESULT;
 
-char* unit_to_string_MALLOC(const units_si_quantity* unit);
-units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b);
-units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const csi_unit* unit);
+char* unit_to_string_MALLOC(const csi_measurment* unit);
+csi_measurment* unit_add(const csi_measurment* const a, const csi_measurment* const b);
+csi_measurment* unit_subtract(const csi_measurment* const a, const csi_measurment* const b);
+csi_measurment* unit_multiply(const csi_measurment* const a, const csi_measurment* const b);
+csi_measurment* unit_divide(const csi_measurment* const a, const csi_measurment* const b);
+csi_measurment* csi_measurment_create(CSI_MAGINITUDE_TYPE mangitude, const csi_unit* unit);
 
 #endif //CSI_H

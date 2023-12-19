@@ -3,8 +3,6 @@
 //
 
 
-#include <stdio.h>
-
 #include "unit/csi_unit.h"
 
 

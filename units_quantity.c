@@ -9,60 +9,60 @@
 #include <string.h>
 
 
-struct CSI_SI_Quantity
+struct CSI_Measurment
 {
     CSI_MAGINITUDE_TYPE magnitude;
     const csi_unit* type;
 };
 
-const units_si_quantity INVALID_RESULT = { CSI_MAGINITUDE_TYPE_ZERO, NULL};
+const csi_measurment INVALID_RESULT = {CSI_MAGINITUDE_TYPE_ZERO, NULL};
 
 
-char* unit_to_string_MALLOC(const units_si_quantity* unit){
+char* unit_to_string_MALLOC(const csi_measurment* unit)
+{
     char* numericString = malloc(CSI_MAX_NUMBER_OF_CHARACTERS_IN_STRING * sizeof(char));
     CSI_MAGNITUDE_TYPE_TO_STRING(numericString, unit->magnitude);
-    return numericString;   
+    return numericString;
 }
 
 #define ALLOCATE_AND_RETURN_UNIT(MAGNITUDE, TYPE) \
-    units_si_quantity* result = malloc(sizeof(units_si_quantity)); \
+    csi_measurment* result = malloc(sizeof(csi_measurment)); \
     result->magnitude = MAGNITUDE; \
     result->type = TYPE; \
     return result
 
-units_si_quantity* allocate_units_si_quantity(const units_si_quantity* const src)
+csi_measurment* allocate_units_si_quantity(const csi_measurment* const src)
 {
-    units_si_quantity* dest = malloc(sizeof(units_si_quantity));
-    memcpy(dest, src, sizeof(units_si_quantity));
+    csi_measurment* dest = malloc(sizeof(csi_measurment));
+    memcpy(dest, src, sizeof(csi_measurment));
     return dest;
 }
-units_si_quantity* unit_add(const units_si_quantity* const a, const units_si_quantity* const b)
+
+csi_measurment* unit_add(const csi_measurment* const a, const csi_measurment* const b)
 {
     CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_ADD(a->magnitude, b->magnitude);
     ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* unit_subtract(const units_si_quantity* const a, const units_si_quantity* const b)
+csi_measurment* unit_subtract(const csi_measurment* const a, const csi_measurment* const b)
 {
     CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_SUBTRACT(a->magnitude, b->magnitude);
-        ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
+    ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* unit_multiply(const units_si_quantity* const a, const units_si_quantity* const b)
+csi_measurment* unit_multiply(const csi_measurment* const a, const csi_measurment* const b)
 {
     CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_MULTIPLY(a->magnitude, b->magnitude);
-        ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
+    ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* unit_divide(const units_si_quantity* const a, const units_si_quantity* const b)
+csi_measurment* unit_divide(const csi_measurment* const a, const csi_measurment* const b)
 {
     CSI_MAGINITUDE_TYPE magnitude = CSI_MAGINITUDE_TYPE_DIVIDE(a->magnitude, b->magnitude);
     ALLOCATE_AND_RETURN_UNIT(magnitude, a->type);
 }
 
-units_si_quantity* units_si_quantity_create(CSI_MAGINITUDE_TYPE mangitude, const csi_unit* unit)
+csi_measurment* units_si_quantity_create(const CSI_MAGINITUDE_TYPE mangitude, const csi_unit* unit)
 {
     ALLOCATE_AND_RETURN_UNIT(mangitude, unit);
 }
-
-
